@@ -42,12 +42,14 @@ from EMP e, DEPT d
 select *
 from DEPT d   --8
 
---9.	Write a Query to display employee name, his employee number, his salary and also his annual salary for every employee.
+/*9.	Write a Query to display employee name, his employee number, 
+his salary and also his annual salary for every employee.*/
 
 select e.SAL*12 Annualsalary
 from EMP e                        ---9
 
---10.	Write a Query to display employee name, his employee number and salary with the hike of 30% for every employee.
+/*10.	Write a Query to display employee name,
+his employee number and salary with the hike of 30% for every employee.*/
 
 select e.EMPNO, e.ENAME,e.SAL*1.3  "30% hike"     --10
 from EMP e
@@ -99,7 +101,8 @@ select * from DEPT
 	  where e.SAL>1500
 
 
-	  /*15.	Write a Query to display employee name, his hire date, his salary and annual salary
+	  /*15.	Write a Query to display employee name, his hire date, his salary
+	  and annual salary
 	  only if his annual salary greater than 10000.*/
 
 	  select e.ENAME,e.HIREDATE,e.SAL,e.SAL,e.SAL*12 ANNUAL_SALARY
@@ -122,6 +125,196 @@ select * from DEPT
 
 	  /*18.	Write a Query to display all the details of employee only 
 	  if they were hired after the year 1995.*/
+
+	  select e.DEPTNO, e.EMPNO, d.DEPTNO,e.ENAME,d.DNAME,e.JOB,e.MGR,e.SAL,e.HIREDATE,d.LOC
+	  from EMP e , DEPT d
+	  where e.HIREDATE>1995
+
+	  /*19.	Write a Query to display all the details of employee 
+	  only if his commission is greater than his salary.*/
+
+
+select e.EMPNO,e.DEPTNO,e.ENAME,e.JOB,e.MGR,e.COMM,e.SAL,d.DNAME,d.LOC
+from EMP e, DEPT d
+where e.COMM>e.SAL
+
+select distinct * from EMP
+inner join DEPT on EMP.DEPTNO = DEPT.DEPTNO 
+where loc in
+(select distinct loc from DEPT)
+where LOC in 'new york' 
+
+
+select * from EMP
+where DEPTNO in
+(select DEPTNO from DEPT)
+
+select * from (select ENAME,EMP.EMPNO from EMP )emp_card
+
+select ENAME from (select ENAME,EMP.EMPNO from EMP )emp_card
+
+/*45.	List all the employee whose name is having letter ‘L’ as second character.*/
+
+select *
+from EMP 
+where ENAME like '_L%'
+
+/*44.	List all the employee whose name starts with ‘S’.*/
+
+select * 
+from EMP
+where ENAME like 'S%'
+
+/*43.	Write a Query to display all the employee’s whose name is 
+having ‘R’ as the second last character.*/
+
+
+select *
+from EMP
+where ENAME like '%s_'
+
+/*20.	Write a Query to display all the details 
+of employee only if his designation is clerk.*/
+
+select *
+from EMP
+where JOB = 'Clerk'
+
+/*21.	Write a Query to display depart name, depart number 
+for all the department which is located in BOSTON.*/
+
+select d.DEPTNO,d.DNAME
+from DEPT d
+where loc = 'boston'
+
+/*22.	Write a Query to display all the details of employee
+only if he belongs to depart number 10 and salary is greater than 2000*/
+
+select * 
+from EMP e, DEPT d
+where SAL>2000 and d.DEPTNO=10
+
+/* 23.	Write a Query to display Ename, salary, annual salary with the hike of
+25% only if he is a clerk and his date of hire is after 16th of June 1982*/
+
+select distinct e.ENAME,e.SAL,e.SAL*12 [annual_salary],e.SAL*1.25 '25% Hike'
+from EMP e , DEPT d
+where e.JOB = 'clerk' and e.HIREDATE>'1982-06-16' 
+
+/*24.	Write a Query to display all the details of employee only if 
+annual salary is greater than15000 and his commission is greater than his salary.*/
+
+select *
+from EMP e
+where e.SAL*12>15000 and e.COMM>e.SAL
+
+
+/*25.	Write a Query to display all the details of department only if department 
+number is 10 or name of department is RESEARCH.*/
+
+select *
+from DEPT d
+where d.DEPTNO = '10' and d.DNAME = 'research'
+
+/*26. Write a Query to display employee name and his employee number 
+and his hired date and salary with reduction of 20% only if his salary
+is greater than 2500 of his department number is 10.*/
+
+select distinct e.EMPNO,e.ENAME,e.HIREDATE,
+case when e.SAL>2500 then e.SAL*0.8 else e.SAL end 'reduction'
+from EMP e, DEPT d
+where d.DEPTNO =10 
+
+
+/*27.	Write a Query to display all the details of employee, if they have
+joined the company before 1985 or his salary is greater than 2500.*/
+
+select *
+from EMP e
+where e.HIREDATE<1985 and e.SAL>2500
+
+/*28.	Write a Query to display all the details of employee who belongs
+to department number is 10 or 20 and salary greater than 2000.*/
+
+select distinct *
+from EMP e
+where DEPTNO =10 and e.SAL>2000 or DEPTNO = 20 and e.SAL>2000
+
+/*29.	Write a Query to display all the details of employee
+if he is working as a salesman 
+or analyst and department number either 10 or 20 and salary should be greater than 2000.*/
+
+select distinct *
+from EMP e
+where e.JOB ='salesman''analyst'and e.DEPTNO = 10 or e.DEPTNO = 20 and e.SAL>2000
+
+/*30.	Write a Query to display all the details of 
+employee who is working as SALESMAN or ANALYST.*/
+
+select *
+from EMP e
+where e.JOB = 'analyst' and e.JOB = 'salesman'
+
+/*73.	List the employees whose salary not in the range of 1000 to 2000 in 
+depart no 10, 20, 30 except all salesman.*/
+
+select distinct *
+from EMP 
+where SAL not between 1000 and 2000 and deptno in (10,20,30)
+and job!= 'salesman' 
+
+/*72.	List the employee who are not working as manager and clerk in 
+--depart no 10 and 20 with salary in the range of 1000 to 3000.*/
+
+select distinct *
+from EMP
+where JOB not in ( 'manager','clerk') and DEPTNO in (10,20) and SAL between 1000 and  3000 
+
+
+/*56.	List all the employees except 
+those who are working in department number 10 and 20.*/
+
+select distinct *
+from EMP
+where DEPTNO not in (10,20)
+
+/*43.	Write a Query to display all the employee’s whose name
+is having ‘R’ as the second last character.*/
+
+select distinct *
+from EMP
+where ENAME like '%r_'
+
+/* 75.	Write a Query to display all the employees whose job has string ‘MAN’ in it.*/
+
+select distinct *
+from EMP
+where JOB like '&MAN'
+
+
+/*69.	Write a Query to display all the employees having ‘E’ as the last but 
+one character in employee name but salary having atleast 4 character.*/
+
+select *
+from EMP
+where ENAME like '%E_' and SAL = 
+
+/*68.	Write a Query to display all the employee 
+who are clerk and analyst with salary greater than 1000.*/
+
+select distinct *
+from EMP
+where JOB = ('clerk''analyst') and SAL>1000
+
+/*67.	Write a Query to display all the manager whose annual salary is ending with 0.*/
+select distinct  e.SAL,e.SAL*12 [annual salary]
+from EMP e
+where JOB = 'manager'and SAL like '%0'
+
+
+
+
+
 
 
 
