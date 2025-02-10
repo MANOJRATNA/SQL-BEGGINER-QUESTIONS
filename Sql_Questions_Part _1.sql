@@ -246,7 +246,7 @@ or analyst and department number either 10 or 20 and salary should be greater th
 
 select distinct *
 from EMP e
-where e.JOB ='salesman''analyst'and e.DEPTNO = 10 or e.DEPTNO = 20 and e.SAL>2000
+where JOB IN ('SALESMAN','ANALYST')and DEPTNO IN ( 10 , 20) and e.SAL>2000
 
 /*30.	Write a Query to display all the details of 
 employee who is working as SALESMAN or ANALYST.*/
@@ -302,23 +302,179 @@ where ENAME like '%E_' and SAL =
 /*68.	Write a Query to display all the employee 
 who are clerk and analyst with salary greater than 1000.*/
 
-select distinct *
+SELECT * 
 from EMP
-where JOB = ('clerk''analyst') and SAL>1000
+where JOB = 'ANALYST' 'CLERK' and SAL>1000
 
 /*67.	Write a Query to display all the manager whose annual salary is ending with 0.*/
 select distinct  e.SAL,e.SAL*12 [annual salary]
 from EMP e
 where JOB = 'manager'and SAL like '%0'
 
+/*66.	Write a Query to display all the employee who are 
+getting some comm with their designation is neither manager nor analyst.*/
+
+select distinct *
+from EMP e
+where e.COMM>0 and e.JOB not in  ('manager''analyst')
+
+
+/*37.	Write a Query to select a name which begins with ‘A’.*/
+
+select *
+from EMP
+where ENAME like 'A%'
+
+/*38.	Write a Query to select a name which begins with ‘A’ and ends with ‘A’.	*/
+
+select *
+from EMP
+where ENAME like '%A' and ENAME like 'A%'
+select ascii('jj')
+
+select ename , len (ename) from EMP
+
+select ename + '	 , good morning		' [greetings] from EMP e
+
+/*40.	Write a Query to select the name which starts with ‘M’.*/
+
+select *
+from EMP
+where ENAME like 'M%'
+
+/*42.	Write a Query to select name which is having substring NA atleast twice*/
+
+select *
+from EMP
+where ENAME like '%NA%'
+
+/*41.	Write a Query to match name to select string which is having substring MAD.*/
+
+select *
+from EMP
+where ENAME like '%MAD%'
+
+
+/*46.	List all the employee whose name is having atleast 2 L’s in it.*/
+
+SELECT *
+FROM EMP
+WHERE ENAME LIKE '%L%L%'
+
+/*48.	List all the employee whose name is having letter ‘R’ in the 3rd position.*/
+
+SELECT *
+FROM EMP
+WHERE ENAME LIKE '___R%'
+
+/*49.	List all the employee who are having exactly 5 character in their jobs*/
+
+SELECT *
+FROM EMP
+WHERE LEN(JOB) = 5
+
+
+/*51.	List the employee whose comm is NULL.*/
+
+SELECT *
+FROM EMP
+WHERE COMM IS NULL
+
+/* 51.	List the employee whose comm is NULL.*/
+
+SELECT *
+FROM EMP
+WHERE MGR IS NULL
+
+/* 53.	List all the salesman in department number 30.*/
+
+SELECT * 
+FROM EMP
+WHERE DEPTNO = 30
+
+
+/*54.	List all the salesman in department number 30 and
+having salary greater than 5000.*/
+
+SELECT *
+FROM EMP
+WHERE DEPTNO = 30 AND SAL = 5000
+
+
+
+/* 55.	List all the employees whose name starts with ‘S’ or ‘A’.*/
+
+SELECT *
+FROM EMP
+WHERE ENAME LIKE 'S%' OR ENAME LIKE '%A' 
+
+/*56.	List all the employees except those who are working in department number 10 and 20.*/
+
+SELECT *
+FROM EMP 
+WHERE DEPTNO NOT IN (10,20) 
+
+/*57.	List all the employees whose name doesn’t start with ‘S’.*/
+
+SELECT *
+FROM EMP
+WHERE ENAME NOT LIKE 'S%'
+
+
+/* 58.	List all the employees who are having reporting manager in department 10.*/
+
+
+/* 194.	Write a Query to obtain total salary of an employee, 
+where total salary is (Monthly sal + Incentives).*/
+
+SELECT * 
+FROM EMP E
+WHERE = SAL+COMM 
+
+/* 193.	Write a Query to display all the details of employee,
+who are hired in alternative weeks starting Monday.*/
 
 
 
 
+WITH CTE_JOBDETAILS 
+AS (SELECT E.EMPNO,E.ENAME,E.DEPTNO,D.DNAME FROM EMP E, DEPT D)
+SELECT DISTINCT * FROM CTE_JOBDETAILS
+WHERE DEPTNO = 20 AND DNAME = 'RESEARCH'
 
+/* 61.	Write a Query to display who are having _(underscore) 
+as second character in their name*/
 
+SELECT * 
+FROM EMP
+WHERE ENAME LIKE '_'
 
+/* 63.	Write a Query to display all the employee who are getting 2500
+and excess salaries’ in department number 20*/
 
+SELECT * 
+FROM EMP
+WHERE SAL>2500 AND DEPTNO = 20 
 
+/* 64.	Write a Query to display all the manager working in depart number 20 and 30.
+*/
 
+SELECT  E.MGR
+FROM EMP E
+WHERE DEPTNO IN (20,30) 
+
+/* 71.	Write a Query to display all the employees who are joined in Feb.*/
+
+SELECT * 
+FROM EMP
+WHERE HIREDATE BETWEEN 'JANUARY' AND  'MARCH'
+
+/* SELECT CUSTOMERS WHERE JOB IS CLERK AND NAME START WITH S*/
+
+SELECT *
+FROM EMP
+WHERE JOB = 'ANALYST' AND ENAME LIKE 'S%'
+
+SELECT * 
+FROM EMP
 
